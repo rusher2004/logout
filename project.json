@@ -1,0 +1,18 @@
+{
+ "name": "logOut",
+ "description": "Enter your project description",
+ "author": {
+  "name": "Robert Usher",
+  "email": "robertinthecloud@icloud.com"
+ },
+ "version": "0.1.0",
+ "binaryname": "logOut",
+ "frontend": {
+  "dir": "frontend",
+  "install": "npm install",
+  "build": "npm run build",
+  "bridge": "src",
+  "serve": "npm run serve"
+ },
+ "WailsVersion": ""
+}
