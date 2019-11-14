@@ -3,13 +3,23 @@
     <v-card-title class="headline" primary-title>
       <div>{{container.Image}}</div>
       <v-spacer></v-spacer>
-      <v-btn color="primary" text>
+      <v-chip>
+        <v-chip color="green" text-color="white" class="subtitle-1 ml-n3 mr-1 px-2">{{container.State}}</v-chip>
+        <div class="caption">{{container.Status}}</div>
+      </v-chip>
+      <v-btn @click="logsView=true" :disabled="logsView" color="primary" text>
+        <v-icon>mdi-code-equal</v-icon>
+      </v-btn>  
+      <v-btn @click="logsView=false" :disabled="!logsView" color="primary" text>
         <v-icon>mdi-code-braces</v-icon>
       </v-btn>
     </v-card-title>
-    <v-card-text class="tile-text" v-bind:id="textID">
+    <v-card-text v-if="logsView" class="tile-text" v-bind:id="textID">
       <code v-bind:class="textID">{{logText}}</code>
     </v-card-text>
+    <v-content v-if="!logsView">
+      {{container}}
+    </v-content>
     <v-divider></v-divider>
     <v-card-actions>
       <v-switch class="ml-1" v-model="follow" inset :label="'Follow'"></v-switch>
@@ -48,13 +58,12 @@ export default {
       textID: "",
       follow: true,
       snackbar: false,
-      snackbarTimeout: 500
+      snackbarTimeout: 750,
+      logsView: true
     };
   },
-  created() {
-    this.textID = "log-text-" + this.container.Id;
-  },
   mounted() {
+    this.textID = "log-text-" + this.container.Id;
     window.backend.Containers.StreamContainerLogs(this.container.Id)
     Wails.Events.On(`log-stream-${this.container.Id}`, message => {
       let arr = message.log.substring(1, message.log.length - 1).split(" ");
@@ -72,7 +81,9 @@ export default {
       setTimeout(() => {
         if (this.follow) {
           let scrollEl = document.getElementById(this.textID)
-          scrollEl.scrollTop = scrollEl.scrollHeight
+          if (scrollEl) {
+            scrollEl.scrollTop = scrollEl.scrollHeight
+          }
         }
         this.goToBottom()
       }, 50)

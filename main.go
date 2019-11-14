@@ -17,12 +17,13 @@ func main() {
 	}
 
 	app := wails.CreateApp(&wails.AppConfig{
-		Width:  1024,
-		Height: 1024,
-		Title:  "logOut",
-		JS:     js,
-		CSS:    css,
-		Colour: "#131313",
+		Width:     1024,
+		Height:    768,
+		Title:     "logOut",
+		JS:        js,
+		CSS:       css,
+		Colour:    "#131313",
+		Resizable: true,
 	})
 	app.Bind(myContainers)
 	// app.Bind(ContainerInspect)

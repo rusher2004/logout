@@ -5,12 +5,11 @@ import Vue from 'vue';
 import Vuetify from 'vuetify';
 const opts = {
 	theme: {
-		dark: true
+		dark: false
 	},
 }
 Vue.use(Vuetify, opts);
 import 'vuetify/dist/vuetify.min.css';
-// import 'material-design-icons-iconfont';
 import '@mdi/font/css/materialdesignicons.css';
 
 import App from './App.vue';

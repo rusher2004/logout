@@ -32,9 +32,12 @@
 
     <v-app-bar app clipped-left>
       <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" /> -->
-      <v-toolbar-title>logOut</v-toolbar-title>
+      <v-toolbar-title class="display-1">logOut</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
+        <v-btn @click="getContainers" text>
+          <v-icon>mdi-reload</v-icon>
+        </v-btn>
         <v-icon>mdi-brightness-7</v-icon>
         <v-switch class="mt-5 ml-3 mr-n2" v-model="$vuetify.theme.dark" inset></v-switch>
         <v-icon>mdi-brightness-2</v-icon>
@@ -70,16 +73,8 @@ export default {
     drawer: false
   }),
 
-  async mounted() {
-    window.backend.Containers
-      .GetContainers()
-      .then(res => {
-        this.containers = res
-        console.log('containers', this.containers)
-      })
-      .catch(error => {
-        console.log("Error getting containers: ", error)
-      })
+  mounted() {
+    this.getContainers()
   },
 
   components: {
@@ -87,7 +82,19 @@ export default {
     Containers,
     ContainerTile
   },
-  methods: {}
+  methods: {
+    getContainers: function() {
+      window.backend.Containers
+        .GetContainers()
+        .then(res => {
+          this.containers = res
+          console.log('containers', this.containers)
+        })
+        .catch(error => {
+          console.log("Error getting containers: ", error)
+        })
+    }
+  }
 };
 </script>
 
